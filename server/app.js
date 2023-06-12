@@ -6,6 +6,21 @@ app.listen(3000, () => {
     console.log('Server listening on port 3000')
 })
 
+// Database connectivity
+const mongoose = require('mongoose')
+const DB = "mongodb+srv://ahmed:<Manutd1604:*>@cluster0.jvpuihz.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(DB, {
+    useNewUrlParser    : true,
+    useCreateIndex     : true,
+    useUnifiedTopology : true,
+    useFindAndModify   : false
+}).then(() => {
+    console.log("Database connected to the backend server!");
+}).catch((err) => {
+    console.log("Database connection failed!")
+});
+
 // Middleware functions are functions that have access to request and response object
 // and next function in the request-response cycle
 // Next function is a function in Express router which when invoked executes the middleware succeeding 
