@@ -6,6 +6,12 @@ app.listen(3000, () => {
     console.log('Server listening on port 3000')
 })
 
+// For our program to understand json we get undefined so to define it
+app.use(express.json());
+
+// get homepage router from router folder
+app.use(require('./router/auth'));
+
 // Database credential security
 const dotenv = require('dotenv')
 dotenv.config({path: './config.env'})
@@ -28,11 +34,6 @@ const middleware = (req, res, next) => {
     // middleware will always run first, then load the webpage which is
     // called by user
 }
-
-// Different webpages of the project
-app.get('/', (req, res) => {
-    res.send('Hello World, from home')
-});
 
 app.get('/about', middleware, (req, res) => {
     console.log('Runs second!')
