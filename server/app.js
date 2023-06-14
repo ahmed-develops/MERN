@@ -13,6 +13,9 @@ dotenv.config({path: './config.env'})
 // Database seperated from app.js
 require('./database/connection')
 
+// Use the "User" from userSchema.js
+const User = require('./model/userSchema')
+
 // Middleware functions are functions that have access to request and response object
 // and next function in the request-response cycle
 // Next function is a function in Express router which when invoked executes the middleware succeeding 
