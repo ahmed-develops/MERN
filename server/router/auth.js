@@ -7,8 +7,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-    console.log(req.body);
-    res.send("Testing123");
+
+    // ECMA SCRIPT 2016 CONVENTION OF DISPLAYING DATA
+    const {name, email, phone, work, password, confirm_password} = req.body;
+    console.log(name);
+    //res.send("Testing123");
 });
 
 module.exports = router;
