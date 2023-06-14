@@ -62,4 +62,28 @@ router.post('/register', async (req, res) => {
     //res.send("Testing123");
 });
 
+// Signin form backend
+
+router.post('/signin', async (req, res) => {
+    try{
+        const {email , password} = req.body
+        
+        if (!email || !password) {
+            return res.status(400).json({error : "Fields must not be empty!"})
+        }
+
+        const userLogin = await User.findOne({email:email})
+
+        if (!userLogin) {
+            return res.status(402).json({msg : "Login unsuccessful!"})
+        }
+
+        res.status(200).json({msg : "Login successful!"})
+        console.log(userLogin);
+    }
+    catch(err) {
+        console.log(err);
+    }
+});
+
 module.exports = router;
