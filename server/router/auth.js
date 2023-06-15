@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../model/userSchema')
+const bcrypt = require("bcryptjs")
 
 const router = express.Router();
 
@@ -79,12 +80,19 @@ router.post('/signin', async (req, res) => {
 
         const userLogin = await User.findOne({ email: email })
 
-        if (!userLogin) {
-            return res.status(402).json({ msg: "Login unsuccessful!" })
-        }
+        if (userLogin) { // if email is found then check for password
+            const isMatch = await bcrypt.compare(password, userLogin.password)
 
-        res.status(200).json({ msg: "Login successful!" })
-        console.log(userLogin);
+            if (!isMatch) {
+                res.status(402).json({ error: "Login unsuccessful" })
+            }
+            else{
+                res.status(200).json({ msg: "Login successful" })
+            }
+        }
+        else {
+            res.status(402).json({ err :"Invalid creds!"})
+        }
     }
     catch (err) {
         console.log(err);
