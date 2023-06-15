@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
 // Here we create a user schema (a document structure to manipulate data within NoSQL database)
 
@@ -27,7 +28,15 @@ const userSchema = mongoose.Schema({
     confirm_password: {
         type     : String,
         required : true
-    }
+    },
+    tokens: [
+        {
+            token: {
+                type : String,
+                required: true
+            }
+        }
+    ]
 })
 
 // Encrypting our password here
@@ -39,6 +48,21 @@ userSchema.pre('save', async function (next) {
     }
     next();
 })
+
+let token;
+
+// everytime a user signs in a authorization token will be generated
+userSchema.methods.generateAuthToken = async function() {
+    try{
+        token = jwt.sign({_id: this._id}, process.env.SECRET_KEY)
+        this.tokens = this.tokens.concat({token: token})
+        await this.save();
+        return token;
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
 
 // create a new collection : like a table of the database
 const User = mongoose.model('USER', userSchema)

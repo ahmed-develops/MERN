@@ -83,12 +83,16 @@ router.post('/signin', async (req, res) => {
         if (userLogin) { // if email is found then check for password
             const isMatch = await bcrypt.compare(password, userLogin.password)
 
+            const token = await userLogin.generateAuthToken()
+            console.log(token)
+
             if (!isMatch) {
-                res.status(402).json({ error: "Login unsuccessful" })
+                res.status(400).json({ error: "Login unsuccessful" })
             }
             else{
-                res.status(200).json({ msg: "Login successful" })
+                res.json({ msg: "Login successful" })
             }
+      
         }
         else {
             res.status(402).json({ err :"Invalid creds!"})

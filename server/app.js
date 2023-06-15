@@ -40,7 +40,7 @@ app.get('/about', middleware, (req, res) => {
     res.send('Hello World, from about')
 });
 
-app.get('/login', (req, res) => {
+app.get('/signin', (req, res) => {
     res.send('Hello World, from login')
 });
 
