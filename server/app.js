@@ -45,6 +45,7 @@ app.get('/signin', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
+    // res.cookie("Cookie Sign in", 'F')
     res.send('Hello World, from contact')
 });
 
