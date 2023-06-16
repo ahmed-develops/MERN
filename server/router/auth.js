@@ -86,6 +86,11 @@ router.post('/signin', async (req, res) => {
             const token = await userLogin.generateAuthToken()
             console.log(token)
 
+            // res.cookie("jwtoken", token, {
+            //     httpOnly: true,
+            //     expires: new Date(Date.now() + 100000000)
+            // })
+
             if (!isMatch) {
                 res.status(400).json({ error: "Login unsuccessful" })
             }
